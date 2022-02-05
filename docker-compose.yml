@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - data:/data
+    environment:
+      - MONGO_INITDB_DATABASE=amigoscode
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_DATABASE=amigoscode
+
+volumes:
+  data: {}
+
+networks:
+  default:
+    name: mongodb_network
